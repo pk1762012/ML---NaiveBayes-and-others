@@ -26,7 +26,7 @@ clf.fit(X_train, y_train)
 print(clf.score(X_test,y_test))
 
 emails = [
-    'Hey mohan, can we get together to watch footbal game tomorrow?',
+    'Hey mohan, can we get together to watch football game tomorrow?',
     'Upto 20% discount on parking, exclusive offer just for you. Dont miss this reward!'
 ]
 print(clf.predict(emails))
