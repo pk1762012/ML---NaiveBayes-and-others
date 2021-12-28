@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-
+from sklearn.model_selection import cross_val_score
 from sklearn.naive_bayes import MultinomialNB
 
 df = pd.read_csv("spam1.csv")
@@ -31,3 +31,4 @@ emails = [
 ]
 print(clf.predict(emails))
 
+print(cross_val_score(clf.fit(X_train, y_train), X_train, y_train, cv=6))

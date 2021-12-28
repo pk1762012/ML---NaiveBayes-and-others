@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.naive_bayes import MultinomialNB
 
 df = pd.read_csv("spam1.csv")
@@ -43,3 +43,5 @@ emails = [
 ]
 emails_count = v.transform(emails)
 print(model.predict(emails_count))
+
+print(cross_val_score(MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True), X_train_count, y_train, cv=6))
