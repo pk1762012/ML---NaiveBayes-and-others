@@ -41,9 +41,19 @@ param_grid = {
     'max_depth' : [4,5,6,7,8],
     'criterion' :['gini', 'entropy']
 }
-CV_rfc = RandomizedSearchCV(estimator=clf, param_distributions=param_grid, n_iter=60, cv= 5, n_jobs=-1)
+CV_rfc = RandomizedSearchCV(estimator=clf, param_distributions=param_grid, n_iter=50, cv= 5, n_jobs=-1)
 CV_rfc.fit(X_train, y_train)
-y_pred = CV_rfc.predict(X_test)
 
 print(CV_rfc.best_params_)
+
+clf2 = RandomForestClassifier(n_estimators=CV_rfc.best_params_.get("n_estimators"),
+                             max_features=CV_rfc.best_params_.get("max_features"),
+                             max_depth=CV_rfc.best_params_.get("max_depth"),
+                             criterion=CV_rfc.best_params_.get("criterion"))
+clf2.fit(X_train, y_train)
+y_pred = clf2.predict(X_test)
 print("ACCURACY OF THE MODEL: ", metrics.accuracy_score(y_test, y_pred))
+
+
+feature_imp = pd.Series(clf2.feature_importances_, index = iris.feature_names).sort_values(ascending = False)
+print(feature_imp)
